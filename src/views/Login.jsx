@@ -1,11 +1,15 @@
+import { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { LogIn } from 'lucide-react';
+import { Eye, EyeOff, LogIn } from 'lucide-react';
 import { useLoginController } from '../controllers/useLoginController.js';
+import { useSiteBranding } from '../controllers/useSiteBranding.js';
 
 export default function Login() {
   const navigate = useNavigate();
   const location = useLocation();
   const { username, setUsername, password, setPassword, error, submitting, submit } = useLoginController();
+  const { logoUrl } = useSiteBranding();
+  const [showPassword, setShowPassword] = useState(false);
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -17,6 +21,9 @@ export default function Login() {
     <div className="min-h-screen flex items-center justify-center bg-[#f8f7f4] px-4">
       <div className="w-full max-w-sm card">
         <div className="text-center mb-6">
+          {logoUrl && (
+            <img src={logoUrl} alt="NTYBL" className="h-14 w-14 object-contain mx-auto mb-2" />
+          )}
           <p className="font-display text-2xl font-semibold text-gray-900">NTYBL</p>
           <p className="text-sm text-gray-500 mt-1">Admin Panel</p>
         </div>
@@ -35,14 +42,24 @@ export default function Login() {
           </div>
           <div>
             <label className="text-sm font-medium text-gray-800">Password</label>
-            <input
-              className="input mt-1.5"
-              type="password"
-              autoComplete="current-password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
+            <div className="relative mt-1.5">
+              <input
+                className="input pr-10"
+                type={showPassword ? 'text' : 'password'}
+                autoComplete="current-password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword((v) => !v)}
+                aria-label={showPassword ? 'Hide password' : 'Show password'}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-700 transition"
+              >
+                {showPassword ? <EyeOff size={17} /> : <Eye size={17} />}
+              </button>
+            </div>
           </div>
 
           {error && <p className="text-sm text-red-600">{error}</p>}

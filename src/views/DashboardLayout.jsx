@@ -13,6 +13,8 @@ import {
 } from 'lucide-react';
 import { useState } from 'react';
 import { useAuth } from '../controllers/AuthContext.jsx';
+import { useSiteBranding } from '../controllers/useSiteBranding.js';
+import SessionCountdown from './SessionCountdown.jsx';
 
 const NAV_ITEMS = [
   { to: '/leads', label: 'Leads', icon: Users },
@@ -26,6 +28,7 @@ const NAV_ITEMS = [
 
 export default function DashboardLayout() {
   const { username, logout } = useAuth();
+  const { logoUrl } = useSiteBranding();
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const navLinks = (
@@ -52,9 +55,12 @@ export default function DashboardLayout() {
     <div className="min-h-screen flex bg-[#f8f7f4]">
       {/* Desktop sidebar */}
       <aside className="hidden lg:flex lg:flex-col w-64 bg-white border-r border-gray-200 shrink-0">
-        <div className="px-5 py-5 border-b border-gray-200">
-          <p className="font-display text-xl font-semibold text-gray-900">NTYBL</p>
-          <p className="text-xs text-gray-500">Admin Panel</p>
+        <div className="px-5 py-5 border-b border-gray-200 flex items-center gap-3">
+          {logoUrl && <img src={logoUrl} alt="NTYBL" className="h-9 w-9 object-contain shrink-0" />}
+          <div>
+            <p className="font-display text-xl font-semibold text-gray-900">NTYBL</p>
+            <p className="text-xs text-gray-500">Admin Panel</p>
+          </div>
         </div>
         {navLinks}
         <div className="px-3 py-4 border-t border-gray-200">
@@ -67,7 +73,10 @@ export default function DashboardLayout() {
 
       {/* Mobile top bar + drawer */}
       <div className="lg:hidden fixed top-0 inset-x-0 z-40 bg-white border-b border-gray-200 flex items-center justify-between px-4 h-14">
-        <p className="font-display text-lg font-semibold text-gray-900">NTYBL Admin</p>
+        <div className="flex items-center gap-2">
+          {logoUrl && <img src={logoUrl} alt="NTYBL" className="h-7 w-7 object-contain" />}
+          <p className="font-display text-lg font-semibold text-gray-900">NTYBL Admin</p>
+        </div>
         <button onClick={() => setMobileOpen((v) => !v)} aria-label="Toggle menu" className="p-2 text-gray-700">
           {mobileOpen ? <X size={22} /> : <Menu size={22} />}
         </button>
@@ -91,6 +100,8 @@ export default function DashboardLayout() {
       <main className="flex-1 min-w-0 p-4 lg:p-8 pt-20 lg:pt-8">
         <Outlet />
       </main>
+
+      <SessionCountdown />
     </div>
   );
 }
