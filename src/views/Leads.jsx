@@ -33,6 +33,8 @@ export default function Leads() {
               <th className="px-4 py-3">Email</th>
               <th className="px-4 py-3">State</th>
               <th className="px-4 py-3">Concern Area</th>
+              <th className="px-4 py-3">Height</th>
+              <th className="px-4 py-3">Weight</th>
               <th className="px-4 py-3">Details</th>
               <th className="px-4 py-3">Submitted</th>
             </tr>
@@ -40,11 +42,11 @@ export default function Leads() {
           <tbody>
             {loading ? (
               <tr>
-                <td colSpan={7} className="px-4 py-8 text-center text-gray-400">Loading…</td>
+                <td colSpan={9} className="px-4 py-8 text-center text-gray-400">Loading…</td>
               </tr>
             ) : leads.length === 0 ? (
               <tr>
-                <td colSpan={7} className="px-4 py-8 text-center text-gray-400">No leads yet.</td>
+                <td colSpan={9} className="px-4 py-8 text-center text-gray-400">No leads yet.</td>
               </tr>
             ) : (
               leads.map((lead) => (
@@ -54,6 +56,8 @@ export default function Leads() {
                   <td className="px-4 py-3">{lead.email}</td>
                   <td className="px-4 py-3 whitespace-nowrap">{lead.state}</td>
                   <td className="px-4 py-3 whitespace-nowrap">{lead.concernArea}</td>
+                  <td className="px-4 py-3 whitespace-nowrap">{lead.height || '—'}</td>
+                  <td className="px-4 py-3 whitespace-nowrap">{lead.weight || '—'}</td>
                   <td className="px-4 py-3 max-w-xs">{lead.problemDetails}</td>
                   <td className="px-4 py-3 whitespace-nowrap text-gray-500">
                     {new Date(lead.createdAt).toLocaleString()}

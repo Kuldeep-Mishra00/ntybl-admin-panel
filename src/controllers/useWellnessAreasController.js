@@ -7,7 +7,11 @@ import {
 } from '../models/wellnessAreasModel.js';
 
 function emptyCard() {
-  return { _id: null, title: '', kicker: '', tags: '', videos: '', order: 0, image: null, file: null, preview: '' };
+  return {
+    _id: null, title: '', kicker: '', tags: '', videos: '', order: 0,
+    image: null, file: null, preview: '',
+    detailVideo: '', detailFile: null, detailPreview: '',
+  };
 }
 
 function fromApi(item) {
@@ -21,6 +25,9 @@ function fromApi(item) {
     image: item.image,
     file: null,
     preview: item.image?.url || '',
+    detailVideo: item.detailVideo || '',
+    detailFile: null,
+    detailPreview: item.detailImage?.url || '',
   };
 }
 
@@ -53,6 +60,12 @@ export function useWellnessAreasController() {
     setCards((prev) => prev.map((c, idx) => (idx === i ? { ...c, file: f, preview: URL.createObjectURL(f) } : c)));
   }
 
+  function handleDetailFile(i, e) {
+    const f = e.target.files?.[0];
+    if (!f) return;
+    setCards((prev) => prev.map((c, idx) => (idx === i ? { ...c, detailFile: f, detailPreview: URL.createObjectURL(f) } : c)));
+  }
+
   function addCard() {
     setCards((prev) => [...prev, emptyCard()]);
   }
@@ -72,7 +85,9 @@ export function useWellnessAreasController() {
     form.append('tags', c.tags);
     form.append('videos', c.videos);
     form.append('order', String(c.order));
+    form.append('detailVideo', c.detailVideo);
     if (c.file) form.append('image', c.file);
+    if (c.detailFile) form.append('detailImage', c.detailFile);
 
     try {
       const saved = c._id ? await updateWellnessArea(c._id, form) : await createWellnessArea(form);
@@ -101,5 +116,5 @@ export function useWellnessAreasController() {
     }
   }
 
-  return { cards, error, success, savingIdx, update, handleFile, addCard, saveCard, removeCard };
+  return { cards, error, success, savingIdx, update, handleFile, handleDetailFile, addCard, saveCard, removeCard };
 }

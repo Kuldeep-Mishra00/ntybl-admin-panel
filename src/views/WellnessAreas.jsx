@@ -3,7 +3,7 @@ import { useWellnessAreasController } from '../controllers/useWellnessAreasContr
 import Banner from './Banner.jsx';
 
 export default function WellnessAreas() {
-  const { cards, error, success, savingIdx, update, handleFile, addCard, saveCard, removeCard } =
+  const { cards, error, success, savingIdx, update, handleFile, handleDetailFile, addCard, saveCard, removeCard } =
     useWellnessAreasController();
 
   return (
@@ -50,6 +50,28 @@ export default function WellnessAreas() {
                   <label className="block text-xs font-medium text-gray-600 mb-1">YouTube video IDs (comma-separated)</label>
                   <input className="input" value={c.videos} onChange={(e) => update(i, 'videos', e.target.value)} placeholder="dQw4w9WgXcQ, abc12345678" />
                 </div>
+
+                <div className="rounded-lg border border-gray-200 bg-gray-50 p-3">
+                  <p className="text-xs font-semibold text-gray-700 mb-2">Detail media <span className="font-normal text-gray-400">— shown inside the expanded card (video takes priority over image)</span></p>
+                  <div className="grid sm:grid-cols-[120px_1fr] gap-3 items-start">
+                    <div>
+                      {c.detailPreview ? (
+                        <img src={c.detailPreview} alt="" className="w-full h-20 object-cover rounded-lg border border-gray-200" />
+                      ) : (
+                        <div className="w-full h-20 rounded-lg border border-dashed border-gray-300 grid place-items-center text-gray-400 text-[11px]">No image</div>
+                      )}
+                      <label className="btn-outline text-xs mt-2 cursor-pointer inline-flex w-full justify-center">
+                        <Upload size={13} /> Detail image
+                        <input type="file" accept="image/*" className="hidden" onChange={(e) => handleDetailFile(i, e)} />
+                      </label>
+                    </div>
+                    <div>
+                      <label className="block text-xs font-medium text-gray-600 mb-1">Detail YouTube video ID</label>
+                      <input className="input" value={c.detailVideo} onChange={(e) => update(i, 'detailVideo', e.target.value)} placeholder="dQw4w9WgXcQ" />
+                    </div>
+                  </div>
+                </div>
+
                 <div className="flex items-center gap-3">
                   <div>
                     <label className="block text-xs font-medium text-gray-600 mb-1">Order</label>
