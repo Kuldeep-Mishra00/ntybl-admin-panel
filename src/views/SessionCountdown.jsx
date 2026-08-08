@@ -12,14 +12,8 @@ export default function SessionCountdown() {
   const secondsLeft = useSessionCountdown();
   if (secondsLeft == null) return null;
 
-  const low = secondsLeft <= 300; // last 5 minutes
-
   return (
-    <div
-      className={`fixed bottom-4 left-4 z-50 rounded-xl border px-4 py-2.5 text-sm font-medium shadow-soft ${
-        low ? 'bg-red-50 border-red-200 text-red-700' : 'bg-white border-gray-200 text-gray-600'
-      }`}
-    >
+    <div className="fixed bottom-4 lg:bottom-28 left-4 z-50 rounded-xl border bg-red-50 border-red-200 text-red-700 px-4 py-2.5 text-sm font-medium shadow-soft">
       Session expires in <span className="font-mono">{formatTime(secondsLeft)}</span>
     </div>
   );
