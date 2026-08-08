@@ -18,13 +18,13 @@ export default function FooterLinks() {
         {links.length === 0 && <p className="text-sm text-gray-400">No links yet — add one below.</p>}
         {links.map((l, i) => (
           <div key={i} className="flex items-center gap-3">
-            <select className="input w-40" value={l.platform} onChange={(e) => update(i, 'platform', e.target.value)}>
+            <select className="input w-28 shrink-0" value={l.platform} onChange={(e) => update(i, 'platform', e.target.value)}>
               {COMMON_PLATFORMS.map((p) => (
                 <option key={p} value={p}>{p}</option>
               ))}
             </select>
             <input
-              className="input flex-1"
+              className="input flex-1 min-w-0"
               placeholder="https://..."
               value={l.url}
               onChange={(e) => update(i, 'url', e.target.value)}
