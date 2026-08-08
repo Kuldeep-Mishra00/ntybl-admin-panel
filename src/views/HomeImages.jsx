@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Upload } from 'lucide-react';
 import { useHomeImagesController } from '../controllers/useHomeImagesController.js';
 import Banner from './Banner.jsx';
+import ClickableImage from './ClickableImage.jsx';
 
 function ImageSlot({ label, slot, onSave }) {
   const [file, setFile] = useState(null);
@@ -35,7 +36,7 @@ function ImageSlot({ label, slot, onSave }) {
     <div className="card">
       <h3 className="font-semibold text-gray-900 mb-3">{label}</h3>
       {preview ? (
-        <img src={preview} alt="" className="w-full h-48 object-cover rounded-lg border border-gray-200 mb-3" />
+        <ClickableImage src={preview} alt={label} className="w-full h-48 object-cover rounded-lg border border-gray-200 mb-3" />
       ) : (
         <div className="w-full h-48 rounded-lg border border-dashed border-gray-300 grid place-items-center text-gray-400 text-sm mb-3">
           No image set

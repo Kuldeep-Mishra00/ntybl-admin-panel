@@ -1,6 +1,7 @@
 import { Plus, Trash2, Save, Upload } from 'lucide-react';
 import { useWellnessAreasController } from '../controllers/useWellnessAreasController.js';
 import Banner from './Banner.jsx';
+import ClickableImage from './ClickableImage.jsx';
 
 export default function WellnessAreas() {
   const { cards, error, success, savingIdx, update, handleFile, handleDetailFile, addCard, saveCard, removeCard } =
@@ -21,7 +22,7 @@ export default function WellnessAreas() {
             <div className="grid md:grid-cols-[160px_1fr] gap-5">
               <div>
                 {c.preview ? (
-                  <img src={c.preview} alt="" className="w-full h-32 object-cover rounded-lg border border-gray-200" />
+                  <ClickableImage src={c.preview} alt={c.kicker || 'Card image'} className="w-full h-32 object-cover rounded-lg border border-gray-200" />
                 ) : (
                   <div className="w-full h-32 rounded-lg border border-dashed border-gray-300 grid place-items-center text-gray-400 text-xs">No image</div>
                 )}
@@ -56,7 +57,7 @@ export default function WellnessAreas() {
                   <div className="grid sm:grid-cols-[120px_1fr] gap-3 items-start">
                     <div>
                       {c.detailPreview ? (
-                        <img src={c.detailPreview} alt="" className="w-full h-20 object-cover rounded-lg border border-gray-200" />
+                        <ClickableImage src={c.detailPreview} alt="Product image" className="w-full h-20 object-cover rounded-lg border border-gray-200" />
                       ) : (
                         <div className="w-full h-20 rounded-lg border border-dashed border-gray-300 grid place-items-center text-gray-400 text-[11px]">No image</div>
                       )}

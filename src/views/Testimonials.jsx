@@ -1,6 +1,7 @@
 import { Plus, Trash2, Save, Upload, Star } from 'lucide-react';
 import { useTestimonialsController } from '../controllers/useTestimonialsController.js';
 import Banner from './Banner.jsx';
+import ClickableImage from './ClickableImage.jsx';
 
 export default function Testimonials() {
   const { items, error, success, savingIdx, update, handleFile, addItem, saveItem, removeItem } =
@@ -19,7 +20,7 @@ export default function Testimonials() {
             <div className="grid md:grid-cols-[120px_1fr] gap-5">
               <div>
                 {it.preview ? (
-                  <img src={it.preview} alt="" className="w-full h-24 object-cover rounded-full border border-gray-200" />
+                  <ClickableImage src={it.preview} alt={it.name || 'Avatar'} className="w-full h-24 object-cover rounded-full border border-gray-200" />
                 ) : (
                   <div className="w-24 h-24 mx-auto rounded-full border border-dashed border-gray-300 grid place-items-center text-gray-400 text-xs">No photo</div>
                 )}
