@@ -16,7 +16,7 @@ import { useAuth } from '../controllers/AuthContext.jsx';
 
 const NAV_ITEMS = [
   { to: '/leads', label: 'Leads', icon: Users },
-  { to: '/home-images', label: 'Home Images', icon: Image },
+  { to: '/home-images', label: 'Site Images', icon: Image },
   { to: '/wellness-areas', label: 'Wellness Areas', icon: Compass },
   { to: '/testimonials', label: 'Testimonials', icon: MessageSquareQuote },
   { to: '/faq', label: 'FAQ', icon: HelpCircle },

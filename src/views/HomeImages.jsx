@@ -64,14 +64,19 @@ export default function HomeImages() {
 
   return (
     <div>
-      <h1 className="font-display text-2xl font-semibold text-gray-900 mb-1">Home Images</h1>
-      <p className="text-sm text-gray-500 mb-6">The two images shown on the landing page's Hero section.</p>
+      <h1 className="font-display text-2xl font-semibold text-gray-900 mb-1">Site Images</h1>
+      <p className="text-sm text-gray-500 mb-6">
+        Images shown across the landing page — Hero section, site logo (navbar &amp; footer), and the
+        Sessions banner.
+      </p>
 
       <Banner error={error} success={success} />
 
       <div className="grid md:grid-cols-2 gap-6">
         <ImageSlot label="Hero Portrait" slot={data?.heroPortrait} onSave={(v) => saveSlot('heroPortrait', v)} />
         <ImageSlot label="Hero Backdrop" slot={data?.heroBackdrop} onSave={(v) => saveSlot('heroBackdrop', v)} />
+        <ImageSlot label="Site Logo (Navbar & Footer)" slot={data?.logo} onSave={(v) => saveSlot('logo', v)} />
+        <ImageSlot label="Sessions Banner Background" slot={data?.sessionsBanner} onSave={(v) => saveSlot('sessionsBanner', v)} />
       </div>
     </div>
   );
