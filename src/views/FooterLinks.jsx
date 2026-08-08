@@ -9,8 +9,8 @@ export default function FooterLinks() {
 
   return (
     <div>
-      <h1 className="font-display text-2xl font-semibold text-gray-900 mb-1">Footer Social Links</h1>
-      <p className="text-sm text-gray-500 mb-6">Icons shown in the "Follow Us" section of the footer. Saving replaces the whole list.</p>
+      <h1 className="font-display text-2xl font-semibold text-gray-900 dark:text-gray-100 mb-1">Footer Social Links</h1>
+      <p className="text-sm text-gray-500 dark:text-gray-400 mb-6">Icons shown in the "Follow Us" section of the footer. Saving replaces the whole list.</p>
 
       <Banner error={error} success={success} />
 

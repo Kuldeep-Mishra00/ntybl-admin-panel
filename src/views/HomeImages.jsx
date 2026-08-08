@@ -34,7 +34,7 @@ function ImageSlot({ label, slot, onSave }) {
 
   return (
     <div className="card">
-      <h3 className="font-semibold text-gray-900 mb-3">{label}</h3>
+      <h3 className="font-semibold text-gray-900 dark:text-gray-100 mb-3">{label}</h3>
       {preview ? (
         <ClickableImage src={preview} alt={label} className="w-full h-48 object-cover rounded-lg border border-gray-200 mb-3" />
       ) : (
@@ -42,7 +42,7 @@ function ImageSlot({ label, slot, onSave }) {
           No image set
         </div>
       )}
-      <label className="block text-sm font-medium text-gray-800 mb-1">Alt text</label>
+      <label className="block text-sm font-medium text-gray-800 dark:text-gray-200 mb-1">Alt text</label>
       <input className="input mb-3" value={altText} onChange={(e) => setAltText(e.target.value)} placeholder="Describe the image" />
       <label className="btn-outline text-sm cursor-pointer inline-flex">
         <Upload size={15} /> Choose file
@@ -65,8 +65,8 @@ export default function HomeImages() {
 
   return (
     <div>
-      <h1 className="font-display text-2xl font-semibold text-gray-900 mb-1">Site Images</h1>
-      <p className="text-sm text-gray-500 mb-6">
+      <h1 className="font-display text-2xl font-semibold text-gray-900 dark:text-gray-100 mb-1">Site Images</h1>
+      <p className="text-sm text-gray-500 dark:text-gray-400 mb-6">
         Images shown across the landing page — Hero section, site logo (navbar &amp; footer), and the
         Sessions banner.
       </p>

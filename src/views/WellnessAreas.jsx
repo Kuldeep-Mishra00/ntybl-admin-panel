@@ -9,8 +9,8 @@ export default function WellnessAreas() {
 
   return (
     <div>
-      <h1 className="font-display text-2xl font-semibold text-gray-900 mb-1">Wellness Areas</h1>
-      <p className="text-sm text-gray-500 mb-6">
+      <h1 className="font-display text-2xl font-semibold text-gray-900 dark:text-gray-100 mb-1">Wellness Areas</h1>
+      <p className="text-sm text-gray-500 dark:text-gray-400 mb-6">
         Each card shown on the landing page. Videos are YouTube video IDs (the part after <code>v=</code> in the URL), comma-separated.
       </p>
 
@@ -35,25 +35,25 @@ export default function WellnessAreas() {
               <div className="space-y-3">
                 <div className="grid sm:grid-cols-2 gap-3">
                   <div>
-                    <label className="block text-xs font-medium text-gray-600 mb-1">Title</label>
+                    <label className="block text-xs font-medium text-gray-600 dark:text-gray-400 mb-1">Title</label>
                     <input className="input" value={c.title} onChange={(e) => update(i, 'title', e.target.value)} />
                   </div>
                   <div>
-                    <label className="block text-xs font-medium text-gray-600 mb-1">Kicker</label>
+                    <label className="block text-xs font-medium text-gray-600 dark:text-gray-400 mb-1">Kicker</label>
                     <input className="input" value={c.kicker} onChange={(e) => update(i, 'kicker', e.target.value)} />
                   </div>
                 </div>
                 <div>
-                  <label className="block text-xs font-medium text-gray-600 mb-1">Tags (comma-separated)</label>
+                  <label className="block text-xs font-medium text-gray-600 dark:text-gray-400 mb-1">Tags (comma-separated)</label>
                   <input className="input" value={c.tags} onChange={(e) => update(i, 'tags', e.target.value)} placeholder="Weight Loss, Weight Gain" />
                 </div>
                 <div>
-                  <label className="block text-xs font-medium text-gray-600 mb-1">YouTube video IDs (comma-separated)</label>
+                  <label className="block text-xs font-medium text-gray-600 dark:text-gray-400 mb-1">YouTube video IDs (comma-separated)</label>
                   <input className="input" value={c.videos} onChange={(e) => update(i, 'videos', e.target.value)} placeholder="dQw4w9WgXcQ, abc12345678" />
                 </div>
 
-                <div className="rounded-lg border border-gray-200 bg-gray-50 p-3">
-                  <p className="text-xs font-semibold text-gray-700 mb-2">Product Image / Video <span className="font-normal text-gray-400">— shown inside the expanded "Read More" card</span></p>
+                <div className="rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/50 p-3">
+                  <p className="text-xs font-semibold text-gray-700 dark:text-gray-300 mb-2">Product Image / Video <span className="font-normal text-gray-400">— shown inside the expanded "Read More" card</span></p>
                   <div className="grid sm:grid-cols-[120px_1fr] gap-3 items-start">
                     <div>
                       {c.detailPreview ? (
@@ -67,7 +67,7 @@ export default function WellnessAreas() {
                       </label>
                     </div>
                     <div>
-                      <label className="block text-xs font-medium text-gray-600 mb-1">Product video (YouTube ID)</label>
+                      <label className="block text-xs font-medium text-gray-600 dark:text-gray-400 mb-1">Product video (YouTube ID)</label>
                       <input className="input" value={c.detailVideo} onChange={(e) => update(i, 'detailVideo', e.target.value)} placeholder="dQw4w9WgXcQ" />
                     </div>
                   </div>
@@ -75,7 +75,7 @@ export default function WellnessAreas() {
 
                 <div className="flex items-center gap-3">
                   <div>
-                    <label className="block text-xs font-medium text-gray-600 mb-1">Order</label>
+                    <label className="block text-xs font-medium text-gray-600 dark:text-gray-400 mb-1">Order</label>
                     <input type="number" className="input w-24" value={c.order} onChange={(e) => update(i, 'order', Number(e.target.value))} />
                   </div>
                   <div className="flex-1" />

@@ -15,6 +15,7 @@ import { useState } from 'react';
 import { useAuth } from '../controllers/AuthContext.jsx';
 import { useSiteBranding } from '../controllers/useSiteBranding.js';
 import SessionCountdown from './SessionCountdown.jsx';
+import ThemeToggle from './ThemeToggle.jsx';
 
 const NAV_ITEMS = [
   { to: '/leads', label: 'Leads', icon: Users },
@@ -40,7 +41,9 @@ export default function DashboardLayout() {
           onClick={() => setMobileOpen(false)}
           className={({ isActive }) =>
             `flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition ${
-              isActive ? 'bg-brand-green text-white' : 'text-gray-700 hover:bg-brand-cream'
+              isActive
+                ? 'bg-brand-green text-white'
+                : 'text-gray-700 hover:bg-brand-cream dark:text-gray-300 dark:hover:bg-gray-800'
             }`
           }
         >
@@ -52,44 +55,52 @@ export default function DashboardLayout() {
   );
 
   return (
-    <div className="min-h-screen flex bg-[#f8f7f4]">
+    <div className="min-h-screen flex bg-[#f8f7f4] dark:bg-gray-950">
       {/* Desktop sidebar */}
-      <aside className="hidden lg:flex lg:flex-col w-64 bg-white border-r border-gray-200 shrink-0">
-        <div className="px-5 py-5 border-b border-gray-200 flex items-center gap-3">
+      <aside className="hidden lg:flex lg:flex-col w-64 bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-800 shrink-0">
+        <div className="px-5 py-5 border-b border-gray-200 dark:border-gray-800 flex items-center gap-3">
           {logoUrl && <img src={logoUrl} alt="NTYBL" className="h-9 w-9 object-contain shrink-0" />}
           <div>
-            <p className="font-display text-xl font-semibold text-gray-900">NTYBL</p>
-            <p className="text-xs text-gray-500">Admin Panel</p>
+            <p className="font-display text-xl font-semibold text-gray-900 dark:text-gray-100">NTYBL</p>
+            <p className="text-xs text-gray-500 dark:text-gray-400">Admin Panel</p>
           </div>
         </div>
         {navLinks}
-        <div className="px-3 py-4 border-t border-gray-200">
-          <p className="px-3 text-xs text-gray-500 mb-2 truncate">Signed in as {username}</p>
-          <button onClick={logout} className="flex w-full items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-gray-700 hover:bg-red-50 hover:text-red-600 transition">
+        <div className="px-3 py-4 border-t border-gray-200 dark:border-gray-800">
+          <p className="px-3 text-xs text-gray-500 dark:text-gray-400 mb-2 truncate">Signed in as {username}</p>
+          <button onClick={logout} className="flex w-full items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-500/10 transition">
             <LogOut size={17} /> Log out
           </button>
         </div>
       </aside>
 
+      {/* Desktop theme toggle — top-right */}
+      <div className="hidden lg:block fixed top-4 right-6 z-40">
+        <ThemeToggle />
+      </div>
+
       {/* Mobile top bar + drawer */}
-      <div className="lg:hidden fixed top-0 inset-x-0 z-40 bg-white border-b border-gray-200 flex items-center justify-between px-4 h-14">
+      <div className="lg:hidden fixed top-0 inset-x-0 z-40 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800 flex items-center justify-between px-4 h-14">
         <div className="flex items-center gap-2">
           {logoUrl && <img src={logoUrl} alt="NTYBL" className="h-7 w-7 object-contain" />}
-          <p className="font-display text-lg font-semibold text-gray-900">NTYBL Admin</p>
+          <p className="font-display text-lg font-semibold text-gray-900 dark:text-gray-100">NTYBL Admin</p>
         </div>
-        <button onClick={() => setMobileOpen((v) => !v)} aria-label="Toggle menu" className="p-2 text-gray-700">
-          {mobileOpen ? <X size={22} /> : <Menu size={22} />}
-        </button>
+        <div className="flex items-center gap-2">
+          <ThemeToggle />
+          <button onClick={() => setMobileOpen((v) => !v)} aria-label="Toggle menu" className="p-2 text-gray-700 dark:text-gray-200">
+            {mobileOpen ? <X size={22} /> : <Menu size={22} />}
+          </button>
+        </div>
       </div>
       {mobileOpen && (
         <div className="lg:hidden fixed inset-0 z-30 bg-black/40" onClick={() => setMobileOpen(false)}>
-          <aside className="w-72 h-full bg-white flex flex-col" onClick={(e) => e.stopPropagation()}>
-            <div className="px-5 py-5 border-b border-gray-200 mt-14">
-              <p className="text-xs text-gray-500 truncate">Signed in as {username}</p>
+          <aside className="w-72 h-full bg-white dark:bg-gray-900 flex flex-col" onClick={(e) => e.stopPropagation()}>
+            <div className="px-5 py-5 border-b border-gray-200 dark:border-gray-800 mt-14">
+              <p className="text-xs text-gray-500 dark:text-gray-400 truncate">Signed in as {username}</p>
             </div>
             {navLinks}
-            <div className="px-3 py-4 border-t border-gray-200">
-              <button onClick={logout} className="flex w-full items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-gray-700 hover:bg-red-50 hover:text-red-600 transition">
+            <div className="px-3 py-4 border-t border-gray-200 dark:border-gray-800">
+              <button onClick={logout} className="flex w-full items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-500/10 transition">
                 <LogOut size={17} /> Log out
               </button>
             </div>

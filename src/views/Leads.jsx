@@ -9,8 +9,8 @@ export default function Leads() {
     <div>
       <div className="flex items-center justify-between mb-6 gap-3 flex-wrap">
         <div>
-          <h1 className="font-display text-2xl font-semibold text-gray-900">Leads</h1>
-          <p className="text-sm text-gray-500 mt-1">{leads.length} total submissions</p>
+          <h1 className="font-display text-2xl font-semibold text-gray-900 dark:text-gray-100">Leads</h1>
+          <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">{leads.length} total submissions</p>
         </div>
         <div className="flex gap-2">
           <button onClick={reload} className="btn-outline text-sm" disabled={loading}>
@@ -27,7 +27,7 @@ export default function Leads() {
       <div className="card p-0 overflow-x-auto">
         <table className="w-full text-sm">
           <thead>
-            <tr className="border-b border-gray-200 text-left text-xs text-gray-500 uppercase tracking-wide">
+            <tr className="border-b border-gray-200 dark:border-gray-800 text-left text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide">
               <th className="px-4 py-3">Name</th>
               <th className="px-4 py-3">Phone</th>
               <th className="px-4 py-3">Email</th>
@@ -50,8 +50,8 @@ export default function Leads() {
               </tr>
             ) : (
               leads.map((lead) => (
-                <tr key={lead._id} className="border-b border-gray-100 last:border-0 align-top">
-                  <td className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap">{lead.fullName}</td>
+                <tr key={lead._id} className="border-b border-gray-100 dark:border-gray-800 last:border-0 align-top text-gray-700 dark:text-gray-300">
+                  <td className="px-4 py-3 font-medium text-gray-900 dark:text-gray-100 whitespace-nowrap">{lead.fullName}</td>
                   <td className="px-4 py-3 whitespace-nowrap">{lead.countryCode} {lead.phone}</td>
                   <td className="px-4 py-3">{lead.email}</td>
                   <td className="px-4 py-3 whitespace-nowrap">{lead.state}</td>

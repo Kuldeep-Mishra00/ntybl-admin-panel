@@ -9,8 +9,8 @@ export default function Testimonials() {
 
   return (
     <div>
-      <h1 className="font-display text-2xl font-semibold text-gray-900 mb-1">Testimonials</h1>
-      <p className="text-sm text-gray-500 mb-6">Client stories shown in the scrolling testimonials section.</p>
+      <h1 className="font-display text-2xl font-semibold text-gray-900 dark:text-gray-100 mb-1">Testimonials</h1>
+      <p className="text-sm text-gray-500 dark:text-gray-400 mb-6">Client stories shown in the scrolling testimonials section.</p>
 
       <Banner error={error} success={success} />
 
@@ -33,25 +33,25 @@ export default function Testimonials() {
               <div className="space-y-3">
                 <div className="grid sm:grid-cols-3 gap-3">
                   <div>
-                    <label className="block text-xs font-medium text-gray-600 mb-1">Name</label>
+                    <label className="block text-xs font-medium text-gray-600 dark:text-gray-400 mb-1">Name</label>
                     <input className="input" value={it.name} onChange={(e) => update(i, 'name', e.target.value)} />
                   </div>
                   <div>
-                    <label className="block text-xs font-medium text-gray-600 mb-1">Location</label>
+                    <label className="block text-xs font-medium text-gray-600 dark:text-gray-400 mb-1">Location</label>
                     <input className="input" value={it.location} onChange={(e) => update(i, 'location', e.target.value)} />
                   </div>
                   <div>
-                    <label className="block text-xs font-medium text-gray-600 mb-1">Tag</label>
+                    <label className="block text-xs font-medium text-gray-600 dark:text-gray-400 mb-1">Tag</label>
                     <input className="input" value={it.tag} onChange={(e) => update(i, 'tag', e.target.value)} placeholder="Weight Loss" />
                   </div>
                 </div>
                 <div>
-                  <label className="block text-xs font-medium text-gray-600 mb-1">Quote</label>
+                  <label className="block text-xs font-medium text-gray-600 dark:text-gray-400 mb-1">Quote</label>
                   <textarea className="input" rows={2} value={it.quote} onChange={(e) => update(i, 'quote', e.target.value)} />
                 </div>
                 <div className="flex items-center gap-4">
                   <div>
-                    <label className="block text-xs font-medium text-gray-600 mb-1">Rating</label>
+                    <label className="block text-xs font-medium text-gray-600 dark:text-gray-400 mb-1">Rating</label>
                     <div className="flex gap-1">
                       {[1, 2, 3, 4, 5].map((n) => (
                         <button key={n} type="button" onClick={() => update(i, 'rating', n)} aria-label={`${n} stars`}>

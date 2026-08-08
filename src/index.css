@@ -4,6 +4,11 @@
 
 body {
   background-color: #f8f7f4;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+html.dark body {
+  background-color: #0f1115;
+  color: #e5e7eb;
 }
 
 @layer components {
@@ -13,9 +18,17 @@ body {
     border: 1px solid #d0d5cf;
     border-radius: 0.6rem;
     background: #fff;
+    color: #1f2937;
     font-size: 0.9rem;
-    transition: border-color 0.15s, box-shadow 0.15s;
+    transition: border-color 0.15s, box-shadow 0.15s, background-color 0.15s, color 0.15s;
   }
+  html.dark .input {
+    background: #1a1d23;
+    border-color: #374151;
+    color: #e5e7eb;
+  }
+  html.dark .input::placeholder { color: #9ca3af; }
+  html.dark .input option { background: #1a1d23; color: #e5e7eb; }
   .input:focus {
     outline: none;
     border-color: #708658;
@@ -58,11 +71,23 @@ body {
     border-color: #708658;
     background: #f0e9e3;
   }
+  html.dark .btn-outline {
+    border-color: #374151;
+    color: #d1d5db;
+  }
+  html.dark .btn-outline:hover {
+    border-color: #708658;
+    background: #1f242c;
+  }
 
   .card {
     background: #fff;
     border: 1px solid #e5e4e7;
     border-radius: 1rem;
     padding: 1.5rem;
+  }
+  html.dark .card {
+    background: #1a1d23;
+    border-color: #2b3038;
   }
 }
