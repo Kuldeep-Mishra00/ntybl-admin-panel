@@ -52,7 +52,7 @@ export default function WellnessAreas() {
                 </div>
 
                 <div className="rounded-lg border border-gray-200 bg-gray-50 p-3">
-                  <p className="text-xs font-semibold text-gray-700 mb-2">Detail media <span className="font-normal text-gray-400">— shown inside the expanded card (video takes priority over image)</span></p>
+                  <p className="text-xs font-semibold text-gray-700 mb-2">Product Image / Video <span className="font-normal text-gray-400">— shown inside the expanded "Read More" card</span></p>
                   <div className="grid sm:grid-cols-[120px_1fr] gap-3 items-start">
                     <div>
                       {c.detailPreview ? (
@@ -61,12 +61,12 @@ export default function WellnessAreas() {
                         <div className="w-full h-20 rounded-lg border border-dashed border-gray-300 grid place-items-center text-gray-400 text-[11px]">No image</div>
                       )}
                       <label className="btn-outline text-xs mt-2 cursor-pointer inline-flex w-full justify-center">
-                        <Upload size={13} /> Detail image
+                        <Upload size={13} /> Product image
                         <input type="file" accept="image/*" className="hidden" onChange={(e) => handleDetailFile(i, e)} />
                       </label>
                     </div>
                     <div>
-                      <label className="block text-xs font-medium text-gray-600 mb-1">Detail YouTube video ID</label>
+                      <label className="block text-xs font-medium text-gray-600 mb-1">Product video (YouTube ID)</label>
                       <input className="input" value={c.detailVideo} onChange={(e) => update(i, 'detailVideo', e.target.value)} placeholder="dQw4w9WgXcQ" />
                     </div>
                   </div>
