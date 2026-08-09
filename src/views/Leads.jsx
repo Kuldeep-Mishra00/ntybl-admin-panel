@@ -1,6 +1,36 @@
+import { useState } from 'react';
 import { Download, RefreshCw, Check, CheckCircle2 } from 'lucide-react';
 import { useLeadsController } from '../controllers/useLeadsController.js';
 import Banner from './Banner.jsx';
+
+// Cell for an un-attended lead: type who attended, then confirm.
+function AttendCell({ lead, busy, onAttend }) {
+  const [name, setName] = useState('');
+  const canSubmit = name.trim().length > 0 && !busy;
+
+  function submit(e) {
+    e.preventDefault();
+    if (canSubmit) onAttend(lead, name.trim());
+  }
+
+  return (
+    <form onSubmit={submit} className="flex items-center gap-2">
+      <input
+        className="input !w-36 !py-1.5 text-xs"
+        placeholder="Attended by…"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+      />
+      <button
+        type="submit"
+        disabled={!canSubmit}
+        className="inline-flex items-center gap-1.5 rounded-lg bg-brand-green text-white px-3 py-1.5 text-xs font-medium hover:bg-[#5d7246] transition disabled:opacity-50"
+      >
+        <Check size={14} /> {busy ? 'Marking…' : 'Attend'}
+      </button>
+    </form>
+  );
+}
 
 export default function Leads() {
   const { leads, loading, error, exporting, attendingId, reload, exportCsv, toggleAttended } =
@@ -93,13 +123,11 @@ export default function Leads() {
                         </button>
                       </div>
                     ) : (
-                      <button
-                        onClick={() => toggleAttended(lead)}
-                        disabled={attendingId === lead._id}
-                        className="inline-flex items-center gap-1.5 rounded-lg bg-brand-green text-white px-3 py-1.5 text-xs font-medium hover:bg-[#5d7246] transition disabled:opacity-60"
-                      >
-                        <Check size={14} /> {attendingId === lead._id ? 'Marking…' : 'Attend'}
-                      </button>
+                      <AttendCell
+                        lead={lead}
+                        busy={attendingId === lead._id}
+                        onAttend={toggleAttended}
+                      />
                     )}
                   </td>
                 </tr>

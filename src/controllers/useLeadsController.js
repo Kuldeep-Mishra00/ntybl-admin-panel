@@ -36,11 +36,11 @@ export function useLeadsController() {
     }
   }
 
-  async function toggleAttended(lead) {
+  async function toggleAttended(lead, attendedBy = '') {
     setAttendingId(lead._id);
     setError('');
     try {
-      const updated = await markLeadAttended(lead._id, !lead.attended);
+      const updated = await markLeadAttended(lead._id, !lead.attended, attendedBy);
       setLeads((prev) => prev.map((l) => (l._id === updated._id ? updated : l)));
     } catch (err) {
       setError(err.message || 'Failed to update lead.');
