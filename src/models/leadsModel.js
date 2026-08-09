@@ -2,6 +2,9 @@ import { API_URL, ApiError, clearSession, getToken, request } from './httpClient
 
 export const fetchLeads = () => request('/api/leads');
 
+export const markLeadAttended = (id, attended) =>
+  request(`/api/leads/${id}/attend`, { method: 'PATCH', body: { attended } });
+
 export async function downloadLeadsCsv() {
   const token = getToken();
   const res = await fetch(`${API_URL}/api/leads/export`, {

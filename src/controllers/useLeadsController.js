@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
-import { downloadLeadsCsv, fetchLeads } from '../models/leadsModel.js';
+import { downloadLeadsCsv, fetchLeads, markLeadAttended } from '../models/leadsModel.js';
 
 export function useLeadsController() {
   const [leads, setLeads] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [exporting, setExporting] = useState(false);
+  const [attendingId, setAttendingId] = useState(null);
 
   async function load() {
     setLoading(true);
@@ -35,5 +36,18 @@ export function useLeadsController() {
     }
   }
 
-  return { leads, loading, error, exporting, reload: load, exportCsv };
+  async function toggleAttended(lead) {
+    setAttendingId(lead._id);
+    setError('');
+    try {
+      const updated = await markLeadAttended(lead._id, !lead.attended);
+      setLeads((prev) => prev.map((l) => (l._id === updated._id ? updated : l)));
+    } catch (err) {
+      setError(err.message || 'Failed to update lead.');
+    } finally {
+      setAttendingId(null);
+    }
+  }
+
+  return { leads, loading, error, exporting, attendingId, reload: load, exportCsv, toggleAttended };
 }
