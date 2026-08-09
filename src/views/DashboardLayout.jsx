@@ -7,6 +7,7 @@ import {
   HelpCircle,
   Link2,
   Settings,
+  PartyPopper,
   LogOut,
   Menu,
   X,
@@ -24,6 +25,7 @@ const NAV_ITEMS = [
   { to: '/testimonials', label: 'Testimonials', icon: MessageSquareQuote },
   { to: '/faq', label: 'FAQ', icon: HelpCircle },
   { to: '/footer-links', label: 'Footer Links', icon: Link2 },
+  { to: '/festive', label: 'Festive Promotions', icon: PartyPopper },
   { to: '/account', label: 'Account Settings', icon: Settings },
 ];
 

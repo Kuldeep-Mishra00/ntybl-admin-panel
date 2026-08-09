@@ -9,6 +9,7 @@ import WellnessAreas from './views/WellnessAreas.jsx';
 import Testimonials from './views/Testimonials.jsx';
 import Faq from './views/Faq.jsx';
 import FooterLinks from './views/FooterLinks.jsx';
+import FestivePromotions from './views/FestivePromotions.jsx';
 import AccountSettings from './views/AccountSettings.jsx';
 
 export default function App() {
@@ -26,6 +27,7 @@ export default function App() {
               <Route path="/testimonials" element={<Testimonials />} />
               <Route path="/faq" element={<Faq />} />
               <Route path="/footer-links" element={<FooterLinks />} />
+              <Route path="/festive" element={<FestivePromotions />} />
               <Route path="/account" element={<AccountSettings />} />
             </Route>
           </Route>
