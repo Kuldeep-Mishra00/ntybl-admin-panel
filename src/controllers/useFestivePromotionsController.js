@@ -5,6 +5,7 @@ import {
   removeFestivePromotion,
   updateFestivePromotion,
 } from '../models/festivePromotionsModel.js';
+import { PENDING_MSG, isPending } from '../models/httpClient.js';
 
 export function useFestivePromotionsController() {
   const [promos, setPromos] = useState([]);
@@ -50,6 +51,7 @@ export function useFestivePromotionsController() {
       const saved = draft._id
         ? await updateFestivePromotion(draft._id, form)
         : await createFestivePromotion(form);
+      if (isPending(saved)) { setSuccess(PENDING_MSG); return true; }
       setPromos((prev) => {
         const exists = prev.some((p) => p._id === saved._id);
         return exists ? prev.map((p) => (p._id === saved._id ? saved : p)) : [saved, ...prev];
@@ -67,7 +69,8 @@ export function useFestivePromotionsController() {
   async function remove(id) {
     setError('');
     try {
-      await removeFestivePromotion(id);
+      const res = await removeFestivePromotion(id);
+      if (isPending(res)) { setSuccess(PENDING_MSG); return; }
       setPromos((prev) => prev.filter((p) => p._id !== id));
       setSuccess('Deleted.');
     } catch (err) {

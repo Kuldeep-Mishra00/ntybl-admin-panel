@@ -2,6 +2,7 @@ export const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:4000';
 
 const TOKEN_KEY = 'ntybl_admin_token';
 const USERNAME_KEY = 'ntybl_admin_username';
+const ROLE_KEY = 'ntybl_admin_role';
 
 export function getToken() {
   return localStorage.getItem(TOKEN_KEY);
@@ -9,13 +10,18 @@ export function getToken() {
 export function getStoredUsername() {
   return localStorage.getItem(USERNAME_KEY);
 }
-export function storeSession(token, username) {
+export function getStoredRole() {
+  return localStorage.getItem(ROLE_KEY) || 'admin';
+}
+export function storeSession(token, username, role = 'admin') {
   localStorage.setItem(TOKEN_KEY, token);
   localStorage.setItem(USERNAME_KEY, username);
+  localStorage.setItem(ROLE_KEY, role);
 }
 export function clearSession() {
   localStorage.removeItem(TOKEN_KEY);
   localStorage.removeItem(USERNAME_KEY);
+  localStorage.removeItem(ROLE_KEY);
 }
 
 export class ApiError extends Error {
@@ -24,6 +30,11 @@ export class ApiError extends Error {
     this.status = status;
   }
 }
+
+// A 202 response from a sub-admin's write means it was staged for approval
+// (see the backend staging middleware) rather than applied.
+export const PENDING_MSG = 'Submitted for admin approval — it goes live once approved.';
+export const isPending = (result) => !!(result && result.pending);
 
 export async function request(path, { method = 'GET', body, isForm = false, auth = true } = {}) {
   const headers = {};

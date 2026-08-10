@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { fetchFooterLinks, replaceFooterLinks } from '../models/footerLinksModel.js';
+import { PENDING_MSG, isPending } from '../models/httpClient.js';
 
 export function useFooterLinksController() {
   const [links, setLinks] = useState([]);
@@ -42,7 +43,9 @@ export function useFooterLinksController() {
     setSuccess('');
     setSaving(true);
     try {
-      setLinks(await replaceFooterLinks(links.map((l, i) => ({ ...l, order: i }))));
+      const res = await replaceFooterLinks(links.map((l, i) => ({ ...l, order: i })));
+      if (isPending(res)) { setSuccess(PENDING_MSG); return; }
+      setLinks(res);
       setSuccess('Saved.');
     } catch (err) {
       setError(err.message || 'Save failed.');

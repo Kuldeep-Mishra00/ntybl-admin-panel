@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { fetchHome, updateHome } from '../models/homeModel.js';
+import { PENDING_MSG, isPending } from '../models/httpClient.js';
 
 export function useHomeImagesController() {
   const [data, setData] = useState(null);
@@ -27,6 +28,7 @@ export function useHomeImagesController() {
     form.append(`${fieldPrefix}Alt`, altText);
     try {
       const updated = await updateHome(form);
+      if (isPending(updated)) { setSuccess(PENDING_MSG); return; }
       setData(updated);
       setSuccess('Saved.');
     } catch (err) {

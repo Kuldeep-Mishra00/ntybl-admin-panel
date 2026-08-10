@@ -37,7 +37,7 @@ export function useAccountSettingsController() {
       if (newPassword) payload.newPassword = newPassword;
 
       const data = await changeCredentials(payload);
-      storeSession(data.token, data.username);
+      storeSession(data.token, data.username, data.role || 'admin');
       updateUsername(data.username);
       setSuccess('Credentials updated.');
       setCurrentPassword('');

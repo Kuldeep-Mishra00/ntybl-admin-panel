@@ -5,6 +5,7 @@ import {
   removeTestimonial,
   updateTestimonial,
 } from '../models/testimonialsModel.js';
+import { PENDING_MSG, isPending } from '../models/httpClient.js';
 
 function emptyItem() {
   return { _id: null, name: '', location: '', rating: 5, quote: '', tag: '', avatar: null, file: null, preview: '' };
@@ -76,6 +77,7 @@ export function useTestimonialsController() {
 
     try {
       const saved = it._id ? await updateTestimonial(it._id, form) : await createTestimonial(form);
+      if (isPending(saved)) { setSuccess(PENDING_MSG); return; }
       setItems((prev) => prev.map((row, idx) => (idx === i ? fromApi(saved) : row)));
       setSuccess('Saved.');
     } catch (err) {
@@ -93,7 +95,8 @@ export function useTestimonialsController() {
     }
     setError('');
     try {
-      await removeTestimonial(it._id);
+      const res = await removeTestimonial(it._id);
+      if (isPending(res)) { setSuccess(PENDING_MSG); return; }
       setItems((prev) => prev.filter((_, idx) => idx !== i));
       setSuccess('Deleted.');
     } catch (err) {

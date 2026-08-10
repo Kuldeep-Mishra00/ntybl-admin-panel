@@ -8,6 +8,8 @@ import {
   Link2,
   Settings,
   PartyPopper,
+  ClipboardCheck,
+  UserCog,
   LogOut,
   Menu,
   X,
@@ -18,7 +20,7 @@ import { useSiteBranding } from '../controllers/useSiteBranding.js';
 import SessionCountdown from './SessionCountdown.jsx';
 import ThemeToggle from './ThemeToggle.jsx';
 
-const NAV_ITEMS = [
+const CONTENT_ITEMS = [
   { to: '/leads', label: 'Leads', icon: Users },
   { to: '/home-images', label: 'Site Images', icon: Image },
   { to: '/wellness-areas', label: 'Wellness Areas', icon: Compass },
@@ -26,13 +28,19 @@ const NAV_ITEMS = [
   { to: '/faq', label: 'FAQ', icon: HelpCircle },
   { to: '/footer-links', label: 'Footer Links', icon: Link2 },
   { to: '/festive', label: 'Festive Promotions', icon: PartyPopper },
-  { to: '/account', label: 'Account Settings', icon: Settings },
 ];
 
 export default function DashboardLayout() {
-  const { username, logout } = useAuth();
+  const { username, logout, isAdmin } = useAuth();
   const { logoUrl } = useSiteBranding();
   const [mobileOpen, setMobileOpen] = useState(false);
+
+  const NAV_ITEMS = [
+    ...CONTENT_ITEMS,
+    { to: '/changes', label: isAdmin ? 'Changes' : 'My Changes', icon: ClipboardCheck },
+    ...(isAdmin ? [{ to: '/subadmins', label: 'Sub-admins', icon: UserCog }] : []),
+    { to: '/account', label: 'Account Settings', icon: Settings },
+  ];
 
   const navLinks = (
     <nav className="flex-1 px-3 py-4 space-y-1">

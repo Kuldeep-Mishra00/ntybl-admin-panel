@@ -5,6 +5,7 @@ import {
   removeWellnessArea,
   updateWellnessArea,
 } from '../models/wellnessAreasModel.js';
+import { PENDING_MSG, isPending } from '../models/httpClient.js';
 
 function emptyCard() {
   return {
@@ -91,6 +92,7 @@ export function useWellnessAreasController() {
 
     try {
       const saved = c._id ? await updateWellnessArea(c._id, form) : await createWellnessArea(form);
+      if (isPending(saved)) { setSuccess(PENDING_MSG); return; }
       setCards((prev) => prev.map((card, idx) => (idx === i ? fromApi(saved) : card)));
       setSuccess('Saved.');
     } catch (err) {
@@ -108,7 +110,8 @@ export function useWellnessAreasController() {
     }
     setError('');
     try {
-      await removeWellnessArea(c._id);
+      const res = await removeWellnessArea(c._id);
+      if (isPending(res)) { setSuccess(PENDING_MSG); return; }
       setCards((prev) => prev.filter((_, idx) => idx !== i));
       setSuccess('Deleted.');
     } catch (err) {

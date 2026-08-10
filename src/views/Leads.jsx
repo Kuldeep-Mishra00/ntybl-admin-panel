@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Download, RefreshCw, Check, CheckCircle2 } from 'lucide-react';
 import { useLeadsController } from '../controllers/useLeadsController.js';
+import { useAuth } from '../controllers/AuthContext.jsx';
 import Banner from './Banner.jsx';
 
 // Cell for an un-attended lead: type who attended, then confirm.
@@ -35,6 +36,7 @@ function AttendCell({ lead, busy, onAttend }) {
 export default function Leads() {
   const { leads, loading, error, exporting, attendingId, reload, exportCsv, toggleAttended } =
     useLeadsController();
+  const { isAdmin } = useAuth();
 
   const attendedCount = leads.filter((l) => l.attended).length;
 
@@ -114,13 +116,15 @@ export default function Leads() {
                         {lead.attendedBy && (
                           <span className="text-xs text-green-700/80 dark:text-green-300/80">by {lead.attendedBy}</span>
                         )}
-                        <button
-                          onClick={() => toggleAttended(lead)}
-                          disabled={attendingId === lead._id}
-                          className="text-xs text-gray-500 dark:text-gray-400 hover:text-red-600 underline underline-offset-2 text-left"
-                        >
-                          {attendingId === lead._id ? 'Updating…' : 'Undo'}
-                        </button>
+                        {isAdmin && (
+                          <button
+                            onClick={() => toggleAttended(lead)}
+                            disabled={attendingId === lead._id}
+                            className="text-xs text-gray-500 dark:text-gray-400 hover:text-red-600 underline underline-offset-2 text-left"
+                          >
+                            {attendingId === lead._id ? 'Updating…' : 'Undo'}
+                          </button>
+                        )}
                       </div>
                     ) : (
                       <AttendCell

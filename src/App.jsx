@@ -10,6 +10,8 @@ import Testimonials from './views/Testimonials.jsx';
 import Faq from './views/Faq.jsx';
 import FooterLinks from './views/FooterLinks.jsx';
 import FestivePromotions from './views/FestivePromotions.jsx';
+import Changes from './views/Changes.jsx';
+import Subadmins from './views/Subadmins.jsx';
 import AccountSettings from './views/AccountSettings.jsx';
 
 export default function App() {
@@ -28,6 +30,8 @@ export default function App() {
               <Route path="/faq" element={<Faq />} />
               <Route path="/footer-links" element={<FooterLinks />} />
               <Route path="/festive" element={<FestivePromotions />} />
+              <Route path="/changes" element={<Changes />} />
+              <Route path="/subadmins" element={<Subadmins />} />
               <Route path="/account" element={<AccountSettings />} />
             </Route>
           </Route>

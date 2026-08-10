@@ -7,6 +7,7 @@ import {
   updateFaqDisclaimer,
   updateFaqItem,
 } from '../models/faqModel.js';
+import { PENDING_MSG, isPending } from '../models/httpClient.js';
 
 function emptyItem() {
   return { _id: null, question: '', answer: '', order: 0 };
@@ -59,6 +60,7 @@ export function useFaqController() {
     const payload = { question: it.question, answer: it.answer, order: it.order };
     try {
       const saved = it._id ? await updateFaqItem(it._id, payload) : await createFaqItem(payload);
+      if (isPending(saved)) { setSuccess(PENDING_MSG); return; }
       setItems((prev) => prev.map((row, idx) => (idx === i ? saved : row)));
       setSuccess('Saved.');
     } catch (err) {
@@ -76,7 +78,8 @@ export function useFaqController() {
     }
     setError('');
     try {
-      await removeFaqItem(it._id);
+      const res = await removeFaqItem(it._id);
+      if (isPending(res)) { setSuccess(PENDING_MSG); return; }
       setItems((prev) => prev.filter((_, idx) => idx !== i));
       setSuccess('Deleted.');
     } catch (err) {
@@ -90,6 +93,7 @@ export function useFaqController() {
     setSavingDisclaimer(true);
     try {
       const saved = await updateFaqDisclaimer(disclaimer);
+      if (isPending(saved)) { setSuccess(PENDING_MSG); return; }
       setDisclaimer(saved?.disclaimer || disclaimer);
       setSuccess('Disclaimer saved.');
     } catch (err) {
