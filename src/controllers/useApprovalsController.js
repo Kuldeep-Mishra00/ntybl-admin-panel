@@ -22,13 +22,19 @@ export function useApprovalsController() {
     load();
   }, []);
 
+  // Marks the row with its outcome (so it flashes green/red), then clears it.
+  function settle(id, outcome) {
+    setChanges((prev) => prev.map((c) => (c._id === id ? { ...c, outcome } : c)));
+    setTimeout(() => setChanges((prev) => prev.filter((c) => c._id !== id)), 1400);
+  }
+
   async function approve(id) {
     setBusyId(id);
     setError('');
     setSuccess('');
     try {
       await approveChange(id);
-      setChanges((prev) => prev.filter((c) => c._id !== id));
+      settle(id, 'approved');
       setSuccess('Approved and applied.');
     } catch (err) {
       setError(err.message || 'Approve failed.');
@@ -43,7 +49,7 @@ export function useApprovalsController() {
     setSuccess('');
     try {
       await rejectChange(id);
-      setChanges((prev) => prev.filter((c) => c._id !== id));
+      settle(id, 'rejected');
       setSuccess('Rejected.');
     } catch (err) {
       setError(err.message || 'Reject failed.');
