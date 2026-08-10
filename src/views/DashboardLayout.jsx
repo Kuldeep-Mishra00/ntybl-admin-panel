@@ -66,8 +66,9 @@ export default function DashboardLayout() {
 
   return (
     <div className="min-h-screen flex bg-[#f8f7f4] dark:bg-gray-950">
-      {/* Desktop sidebar */}
-      <aside className="hidden lg:flex lg:flex-col w-64 bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-800 shrink-0">
+      {/* Desktop sidebar — sticky full-height so nav + Log out stay in view
+          no matter how tall the page content is. */}
+      <aside className="hidden lg:flex lg:flex-col w-64 bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-800 shrink-0 sticky top-0 h-screen overflow-y-auto">
         <div className="px-5 py-5 border-b border-gray-200 dark:border-gray-800 flex items-center gap-3">
           {logoUrl && <img src={logoUrl} alt="NTYBL" className="h-9 w-9 object-contain shrink-0" />}
           <div>

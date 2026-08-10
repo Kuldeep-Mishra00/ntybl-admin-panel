@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Upload } from 'lucide-react';
+import { Upload, Save } from 'lucide-react';
 import { useHomeImagesController } from '../controllers/useHomeImagesController.js';
 import Banner from './Banner.jsx';
 import ClickableImage from './ClickableImage.jsx';
@@ -60,8 +60,61 @@ function ImageSlot({ label, slot, onSave, hint }) {
   );
 }
 
+function WhatsAppSettings({ whatsapp, onSave }) {
+  const [number, setNumber] = useState(whatsapp?.number || '');
+  const [message, setMessage] = useState(whatsapp?.message || '');
+  const [saving, setSaving] = useState(false);
+
+  useEffect(() => {
+    setNumber(whatsapp?.number || '');
+    setMessage(whatsapp?.message || '');
+  }, [whatsapp]);
+
+  async function handleSave() {
+    setSaving(true);
+    try {
+      await onSave(number.replace(/\D/g, ''), message);
+    } finally {
+      setSaving(false);
+    }
+  }
+
+  return (
+    <div className="card mt-6 max-w-2xl">
+      <h3 className="font-semibold text-gray-900 dark:text-gray-100 mb-1">WhatsApp Button</h3>
+      <p className="text-xs text-gray-500 dark:text-gray-400 mb-4">
+        The floating WhatsApp chat button on the landing page. Leave the number blank to hide it.
+      </p>
+      <div className="space-y-3">
+        <div>
+          <label className="block text-sm font-medium text-gray-800 dark:text-gray-200 mb-1">WhatsApp number</label>
+          <input
+            className="input"
+            value={number}
+            onChange={(e) => setNumber(e.target.value)}
+            placeholder="e.g. 919876543210 (country code + number, digits only)"
+          />
+        </div>
+        <div>
+          <label className="block text-sm font-medium text-gray-800 dark:text-gray-200 mb-1">Pre-filled message</label>
+          <textarea
+            className="input"
+            rows={2}
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+            placeholder="Hi! I'd like to know more about your wellness programs."
+          />
+        </div>
+        <button onClick={handleSave} disabled={saving} className="btn-primary text-sm">
+          <Save size={15} /> {saving ? 'Saving…' : 'Save WhatsApp settings'}
+        </button>
+      </div>
+    </div>
+  );
+}
+
 export default function HomeImages() {
-  const { data, error, success, saveSlot } = useHomeImagesController();
+  const { data, error, success, saveSlot, saveWhatsapp } = useHomeImagesController();
 
   if (!data && !error) return <p className="text-gray-500">Loading…</p>;
 
@@ -81,6 +134,8 @@ export default function HomeImages() {
         <ImageSlot label="Site Logo (Navbar & Footer)" hint="1:1 square, transparent PNG — e.g. 512×512" slot={data?.logo} onSave={(v) => saveSlot('logo', v)} />
         <ImageSlot label="Sessions Banner Background" hint="16:9 landscape — e.g. 1920×1080" slot={data?.sessionsBanner} onSave={(v) => saveSlot('sessionsBanner', v)} />
       </div>
+
+      <WhatsAppSettings whatsapp={data?.whatsapp} onSave={saveWhatsapp} />
     </div>
   );
 }

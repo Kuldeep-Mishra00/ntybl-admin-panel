@@ -25,6 +25,10 @@ export default function Faq() {
 
       <Banner error={error} success={success} />
 
+      <button onClick={addItem} className="btn-outline text-sm mb-4">
+        <Plus size={15} /> Add FAQ
+      </button>
+
       <div className="space-y-4">
         {items.map((it, i) => (
           <div key={it._id || `new-${i}`} className="card">
@@ -48,10 +52,6 @@ export default function Faq() {
           </div>
         ))}
       </div>
-
-      <button onClick={addItem} className="btn-outline text-sm mt-4">
-        <Plus size={15} /> Add FAQ
-      </button>
 
       <div className="card mt-8">
         <h3 className="font-semibold text-gray-900 dark:text-gray-100 mb-1">Disclaimer</h3>

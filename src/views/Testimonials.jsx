@@ -14,6 +14,10 @@ export default function Testimonials() {
 
       <Banner error={error} success={success} />
 
+      <button onClick={addItem} className="btn-outline text-sm mb-4">
+        <Plus size={15} /> Add Testimonial
+      </button>
+
       <div className="space-y-5">
         {items.map((it, i) => (
           <div key={it._id || `new-${i}`} className="card">
@@ -74,10 +78,6 @@ export default function Testimonials() {
           </div>
         ))}
       </div>
-
-      <button onClick={addItem} className="btn-outline text-sm mt-4">
-        <Plus size={15} /> Add Testimonial
-      </button>
     </div>
   );
 }

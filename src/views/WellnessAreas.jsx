@@ -16,6 +16,10 @@ export default function WellnessAreas() {
 
       <Banner error={error} success={success} />
 
+      <button onClick={addCard} className="btn-outline text-sm mb-4">
+        <Plus size={15} /> Add Wellness Area
+      </button>
+
       <div className="space-y-5">
         {cards.map((c, i) => (
           <div key={c._id || `new-${i}`} className="card">
@@ -99,10 +103,6 @@ export default function WellnessAreas() {
           </div>
         ))}
       </div>
-
-      <button onClick={addCard} className="btn-outline text-sm mt-4">
-        <Plus size={15} /> Add Wellness Area
-      </button>
     </div>
   );
 }

@@ -37,5 +37,21 @@ export function useHomeImagesController() {
     }
   }
 
-  return { data, error, success, saveSlot };
+  async function saveWhatsapp(number, message) {
+    setError('');
+    setSuccess('');
+    const form = new FormData();
+    form.append('whatsappNumber', number);
+    form.append('whatsappMessage', message);
+    try {
+      const updated = await updateHome(form);
+      if (isPending(updated)) { setSuccess(PENDING_MSG); return; }
+      setData(updated);
+      setSuccess('WhatsApp settings saved.');
+    } catch (err) {
+      setError(err.message || 'Save failed.');
+    }
+  }
+
+  return { data, error, success, saveSlot, saveWhatsapp };
 }
