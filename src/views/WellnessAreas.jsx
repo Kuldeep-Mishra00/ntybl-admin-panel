@@ -1,10 +1,10 @@
-import { Plus, Trash2, Save, Upload } from 'lucide-react';
+import { Plus, Trash2, Save, Upload, X } from 'lucide-react';
 import { useWellnessAreasController } from '../controllers/useWellnessAreasController.js';
 import Banner from './Banner.jsx';
 import ClickableImage from './ClickableImage.jsx';
 
 export default function WellnessAreas() {
-  const { cards, error, success, savingIdx, update, handleFile, handleDetailFile, addCard, saveCard, removeCard } =
+  const { cards, error, success, savingIdx, update, handleFile, addDetailImages, removeDetailImage, addCard, saveCard, removeCard } =
     useWellnessAreasController();
 
   return (
@@ -54,25 +54,31 @@ export default function WellnessAreas() {
                 </div>
 
                 <div className="rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/50 p-3">
-                  <p className="text-xs font-semibold text-gray-700 dark:text-gray-300 mb-2">Product Image / Video <span className="font-normal text-gray-400">— shown inside the expanded "Read More" card</span></p>
-                  <div className="grid sm:grid-cols-[120px_1fr] gap-3 items-start">
-                    <div>
-                      {c.detailPreview ? (
-                        <ClickableImage src={c.detailPreview} alt="Product image" className="w-full h-20 object-cover rounded-lg border border-gray-200" />
-                      ) : (
-                        <div className="w-full h-20 rounded-lg border border-dashed border-gray-300 grid place-items-center text-gray-400 text-[11px]">No image</div>
-                      )}
-                      <label className="btn-outline text-xs mt-2 cursor-pointer inline-flex w-full justify-center">
-                        <Upload size={13} /> Product image
-                        <input type="file" accept="image/*" className="hidden" onChange={(e) => handleDetailFile(i, e)} />
-                      </label>
-                      <p className="text-[11px] text-gray-400 mt-1 text-center">16:9 landscape</p>
-                    </div>
-                    <div>
-                      <label className="block text-xs font-medium text-gray-600 dark:text-gray-400 mb-1">Product video (YouTube ID)</label>
-                      <input className="input" value={c.detailVideo} onChange={(e) => update(i, 'detailVideo', e.target.value)} placeholder="dQw4w9WgXcQ" />
-                    </div>
+                  <p className="text-xs font-semibold text-gray-700 dark:text-gray-300 mb-2">Product Images / Video <span className="font-normal text-gray-400">— shown inside the expanded "Read More" card</span></p>
+
+                  <label className="block text-xs font-medium text-gray-600 dark:text-gray-400 mb-1">Product images <span className="font-normal text-gray-400">(add multiple · 16:9 landscape)</span></label>
+                  <div className="flex flex-wrap gap-2 mb-3">
+                    {c.detailImages.map((im, imgIdx) => (
+                      <div key={imgIdx} className="relative w-20 h-20">
+                        <ClickableImage src={im.url || im.preview} alt="Product" className="w-20 h-20 object-cover rounded-lg border border-gray-200 dark:border-gray-700" />
+                        <button
+                          type="button"
+                          onClick={() => removeDetailImage(i, imgIdx)}
+                          aria-label="Remove image"
+                          className="absolute -top-1.5 -right-1.5 w-5 h-5 grid place-items-center rounded-full bg-gray-900/80 text-white hover:bg-red-600 transition"
+                        >
+                          <X size={12} />
+                        </button>
+                      </div>
+                    ))}
+                    <label className="w-20 h-20 rounded-lg border border-dashed border-gray-300 dark:border-gray-600 grid place-items-center text-gray-400 hover:border-brand-green hover:text-brand-green cursor-pointer transition">
+                      <Upload size={16} />
+                      <input type="file" accept="image/*" multiple className="hidden" onChange={(e) => addDetailImages(i, e)} />
+                    </label>
                   </div>
+
+                  <label className="block text-xs font-medium text-gray-600 dark:text-gray-400 mb-1">Product video (YouTube ID)</label>
+                  <input className="input" value={c.detailVideo} onChange={(e) => update(i, 'detailVideo', e.target.value)} placeholder="dQw4w9WgXcQ" />
                 </div>
 
                 <div className="flex items-center gap-3">

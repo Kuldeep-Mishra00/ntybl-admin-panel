@@ -11,7 +11,7 @@ function emptyCard() {
   return {
     _id: null, title: '', kicker: '', tags: '', videos: '', order: 0,
     image: null, file: null, preview: '',
-    detailVideo: '', detailFile: null, detailPreview: '',
+    detailVideo: '', detailImages: [], // each: { url, publicId } (existing) or { file, preview } (new)
   };
 }
 
@@ -27,8 +27,7 @@ function fromApi(item) {
     file: null,
     preview: item.image?.url || '',
     detailVideo: item.detailVideo || '',
-    detailFile: null,
-    detailPreview: item.detailImage?.url || '',
+    detailImages: (item.detailImages || []).map((im) => ({ url: im.url, publicId: im.publicId })),
   };
 }
 
@@ -61,10 +60,18 @@ export function useWellnessAreasController() {
     setCards((prev) => prev.map((c, idx) => (idx === i ? { ...c, file: f, preview: URL.createObjectURL(f) } : c)));
   }
 
-  function handleDetailFile(i, e) {
-    const f = e.target.files?.[0];
-    if (!f) return;
-    setCards((prev) => prev.map((c, idx) => (idx === i ? { ...c, detailFile: f, detailPreview: URL.createObjectURL(f) } : c)));
+  function addDetailImages(i, e) {
+    const files = Array.from(e.target.files || []);
+    if (!files.length) return;
+    const added = files.map((f) => ({ file: f, preview: URL.createObjectURL(f) }));
+    setCards((prev) => prev.map((c, idx) => (idx === i ? { ...c, detailImages: [...c.detailImages, ...added] } : c)));
+    e.target.value = ''; // allow re-selecting the same file
+  }
+
+  function removeDetailImage(i, imgIdx) {
+    setCards((prev) =>
+      prev.map((c, idx) => (idx === i ? { ...c, detailImages: c.detailImages.filter((_, k) => k !== imgIdx) } : c))
+    );
   }
 
   function addCard() {
@@ -88,7 +95,10 @@ export function useWellnessAreasController() {
     form.append('order', String(c.order));
     form.append('detailVideo', c.detailVideo);
     if (c.file) form.append('image', c.file);
-    if (c.detailFile) form.append('detailImage', c.detailFile);
+    // Detail images: send the existing ones to keep + any newly-picked files.
+    const keptDetail = c.detailImages.filter((im) => im.url).map((im) => ({ url: im.url, publicId: im.publicId }));
+    form.append('existingDetailImages', JSON.stringify(keptDetail));
+    c.detailImages.filter((im) => im.file).forEach((im) => form.append('detailImages', im.file));
 
     try {
       const saved = c._id ? await updateWellnessArea(c._id, form) : await createWellnessArea(form);
@@ -119,5 +129,5 @@ export function useWellnessAreasController() {
     }
   }
 
-  return { cards, error, success, savingIdx, update, handleFile, handleDetailFile, addCard, saveCard, removeCard };
+  return { cards, error, success, savingIdx, update, handleFile, addDetailImages, removeDetailImage, addCard, saveCard, removeCard };
 }
