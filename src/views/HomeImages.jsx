@@ -113,8 +113,50 @@ function WhatsAppSettings({ whatsapp, onSave }) {
   );
 }
 
+function MetaPixelSettings({ metaPixelId, onSave }) {
+  const [value, setValue] = useState(metaPixelId || '');
+  const [saving, setSaving] = useState(false);
+
+  useEffect(() => {
+    setValue(metaPixelId || '');
+  }, [metaPixelId]);
+
+  async function handleSave() {
+    setSaving(true);
+    try {
+      await onSave(value.trim());
+    } finally {
+      setSaving(false);
+    }
+  }
+
+  return (
+    <div className="card mt-6 max-w-2xl">
+      <h3 className="font-semibold text-gray-900 dark:text-gray-100 mb-1">Meta Pixel (Facebook Ads)</h3>
+      <p className="text-xs text-gray-500 dark:text-gray-400 mb-4">
+        Paste your Pixel ID from Meta Events Manager (or the whole base code — we'll pull the ID out).
+        It's injected into the landing page's &lt;head&gt; so your Meta ads can track visits. Leave blank to remove it.
+      </p>
+      <div className="space-y-3">
+        <div>
+          <label className="block text-sm font-medium text-gray-800 dark:text-gray-200 mb-1">Meta Pixel ID</label>
+          <input
+            className="input"
+            value={value}
+            onChange={(e) => setValue(e.target.value)}
+            placeholder="e.g. 1234567890123456"
+          />
+        </div>
+        <button onClick={handleSave} disabled={saving} className="btn-primary text-sm">
+          <Save size={15} /> {saving ? 'Saving…' : 'Save Meta Pixel'}
+        </button>
+      </div>
+    </div>
+  );
+}
+
 export default function HomeImages() {
-  const { data, error, success, saveSlot, saveWhatsapp } = useHomeImagesController();
+  const { data, error, success, saveSlot, saveWhatsapp, saveMetaPixel } = useHomeImagesController();
 
   if (!data && !error) return <p className="text-gray-500">Loading…</p>;
 
@@ -136,6 +178,7 @@ export default function HomeImages() {
       </div>
 
       <WhatsAppSettings whatsapp={data?.whatsapp} onSave={saveWhatsapp} />
+      <MetaPixelSettings metaPixelId={data?.metaPixelId} onSave={saveMetaPixel} />
     </div>
   );
 }
