@@ -43,7 +43,7 @@ export default function DashboardLayout() {
   ];
 
   const navLinks = (
-    <nav className="flex-1 px-3 py-4 space-y-1">
+    <nav className="flex-1 min-h-0 overflow-y-auto px-3 py-4 space-y-1">
       {NAV_ITEMS.map(({ to, label, icon: Icon }) => (
         <NavLink
           key={to}
@@ -123,7 +123,9 @@ export default function DashboardLayout() {
         <Outlet />
       </main>
 
-      <SessionCountdown />
+      {/* Hidden while the mobile drawer is open, otherwise the fixed pill sits
+          on top of the drawer's Log out button and blocks it. */}
+      {!mobileOpen && <SessionCountdown />}
     </div>
   );
 }
