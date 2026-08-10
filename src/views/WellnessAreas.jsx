@@ -30,6 +30,7 @@ export default function WellnessAreas() {
                   <Upload size={13} /> Upload
                   <input type="file" accept="image/*" className="hidden" onChange={(e) => handleFile(i, e)} />
                 </label>
+                <p className="text-[11px] text-gray-400 mt-1 text-center">4:3 landscape</p>
               </div>
 
               <div className="space-y-3">
@@ -65,6 +66,7 @@ export default function WellnessAreas() {
                         <Upload size={13} /> Product image
                         <input type="file" accept="image/*" className="hidden" onChange={(e) => handleDetailFile(i, e)} />
                       </label>
+                      <p className="text-[11px] text-gray-400 mt-1 text-center">16:9 landscape</p>
                     </div>
                     <div>
                       <label className="block text-xs font-medium text-gray-600 dark:text-gray-400 mb-1">Product video (YouTube ID)</label>

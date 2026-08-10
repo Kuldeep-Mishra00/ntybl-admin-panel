@@ -91,6 +91,7 @@ export default function FestivePromotions() {
               <Upload size={13} /> Flyer image
               <input type="file" accept="image/*" className="hidden" onChange={handleFile} />
             </label>
+            <p className="text-[11px] text-gray-400 mt-1 text-center">3:4 portrait</p>
           </div>
 
           <div className="space-y-3">

@@ -28,6 +28,7 @@ export default function Testimonials() {
                   <Upload size={13} /> Upload
                   <input type="file" accept="image/*" className="hidden" onChange={(e) => handleFile(i, e)} />
                 </label>
+                <p className="text-[11px] text-gray-400 mt-1 text-center">1:1 square</p>
               </div>
 
               <div className="space-y-3">
