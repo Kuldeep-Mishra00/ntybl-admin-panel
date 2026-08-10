@@ -33,12 +33,29 @@ function AttendCell({ lead, busy, onAttend }) {
   );
 }
 
+const STAT_TONES = {
+  neutral: 'text-gray-900 dark:text-gray-100',
+  green: 'text-green-600 dark:text-green-400',
+  amber: 'text-amber-600 dark:text-amber-400',
+};
+
+function StatCard({ label, value, tone = 'neutral' }) {
+  return (
+    <div className="card text-center py-4">
+      <div className={`text-3xl font-semibold ${STAT_TONES[tone]}`}>{value}</div>
+      <div className="text-xs text-gray-500 dark:text-gray-400 mt-1 uppercase tracking-wide">{label}</div>
+    </div>
+  );
+}
+
 export default function Leads() {
   const { leads, loading, error, exporting, attendingId, reload, exportCsv, toggleAttended } =
     useLeadsController();
   const { isAdmin } = useAuth();
 
+  const totalCount = leads.length;
   const attendedCount = leads.filter((l) => l.attended).length;
+  const notAttendedCount = totalCount - attendedCount;
 
   return (
     <div>
@@ -46,7 +63,7 @@ export default function Leads() {
         <div>
           <h1 className="font-display text-2xl font-semibold text-gray-900 dark:text-gray-100">Leads</h1>
           <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
-            {leads.length} total · {attendedCount} attended
+            All enquiries submitted from the landing page.
           </p>
         </div>
         <div className="flex gap-2">
@@ -57,6 +74,12 @@ export default function Leads() {
             <Download size={15} /> {exporting ? 'Exporting…' : 'Download CSV'}
           </button>
         </div>
+      </div>
+
+      <div className="grid grid-cols-3 gap-3 sm:gap-4 mb-6">
+        <StatCard label="Total leads" value={totalCount} tone="neutral" />
+        <StatCard label="Attended" value={attendedCount} tone="green" />
+        <StatCard label="Not attended" value={notAttendedCount} tone="amber" />
       </div>
 
       <Banner error={error} />
