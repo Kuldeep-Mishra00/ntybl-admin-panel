@@ -30,6 +30,15 @@ export default function FestivePromotions() {
 
   const set = (field, value) => setDraft((d) => ({ ...d, [field]: value }));
 
+  // Open the native calendar/clock picker as soon as the field is clicked.
+  const openPicker = (e) => {
+    try {
+      e.currentTarget.showPicker?.();
+    } catch {
+      // some browsers only allow showPicker on the icon — the icon still works
+    }
+  };
+
   function handleFile(e) {
     const f = e.target.files?.[0];
     if (!f) return;
@@ -105,12 +114,12 @@ export default function FestivePromotions() {
             </div>
             <div className="grid sm:grid-cols-2 gap-3">
               <div>
-                <label className="block text-xs font-medium text-gray-600 dark:text-gray-400 mb-1">Starts</label>
-                <input type="datetime-local" className="input" value={draft.startAt} onChange={(e) => set('startAt', e.target.value)} />
+                <label className="block text-xs font-medium text-gray-600 dark:text-gray-400 mb-1">Starts (date &amp; time)</label>
+                <input type="datetime-local" className="input cursor-pointer" value={draft.startAt} onChange={(e) => set('startAt', e.target.value)} onClick={openPicker} />
               </div>
               <div>
-                <label className="block text-xs font-medium text-gray-600 dark:text-gray-400 mb-1">Ends</label>
-                <input type="datetime-local" className="input" value={draft.endAt} onChange={(e) => set('endAt', e.target.value)} />
+                <label className="block text-xs font-medium text-gray-600 dark:text-gray-400 mb-1">Ends (date &amp; time)</label>
+                <input type="datetime-local" className="input cursor-pointer" value={draft.endAt} onChange={(e) => set('endAt', e.target.value)} onClick={openPicker} />
               </div>
             </div>
             <div className="flex items-center justify-between">

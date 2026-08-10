@@ -29,6 +29,16 @@ html.dark body {
   }
   html.dark .input::placeholder { color: #9ca3af; }
   html.dark .input option { background: #1a1d23; color: #e5e7eb; }
+  /* Make the native date/time calendar picker icon clickable and visible. */
+  input[type='datetime-local']::-webkit-calendar-picker-indicator {
+    cursor: pointer;
+    opacity: 0.7;
+  }
+  input[type='datetime-local']::-webkit-calendar-picker-indicator:hover { opacity: 1; }
+  html.dark input[type='datetime-local']::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+    opacity: 0.85;
+  }
   .input:focus {
     outline: none;
     border-color: #708658;
