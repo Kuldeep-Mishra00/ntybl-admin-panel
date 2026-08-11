@@ -5,3 +5,6 @@ export const login = (username, password) =>
 
 export const changeCredentials = (payload) =>
   request('/api/admin/credentials', { method: 'PUT', body: payload });
+
+export const checkUsername = (username) =>
+  request(`/api/admin/username-available?username=${encodeURIComponent(username)}`);
