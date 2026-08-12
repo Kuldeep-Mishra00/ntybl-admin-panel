@@ -7,6 +7,18 @@ export default function Testimonials() {
   const { items, error, success, savingIdx, update, handleFile, addItem, saveItem, removeItem } =
     useTestimonialsController();
 
+  function handleDelete(i, item) {
+    // A not-yet-saved draft has nothing to lose — just discard it.
+    if (!item._id) {
+      removeItem(i);
+      return;
+    }
+    const label = item.name?.trim() ? `"${item.name.trim()}"` : 'this testimonial';
+    if (window.confirm(`Delete ${label}? This can't be undone.`)) {
+      removeItem(i);
+    }
+  }
+
   return (
     <div>
       <h1 className="font-display text-2xl font-semibold text-gray-900 dark:text-gray-100 mb-1">Testimonials</h1>
@@ -66,8 +78,12 @@ export default function Testimonials() {
                     </div>
                   </div>
                   <div className="flex-1" />
-                  <button onClick={() => removeItem(i)} className="text-gray-400 hover:text-red-600 transition" aria-label="Delete testimonial">
-                    <Trash2 size={17} />
+                  <button
+                    onClick={() => handleDelete(i, it)}
+                    className="inline-flex items-center gap-1.5 text-sm text-gray-500 dark:text-gray-400 hover:text-red-600 transition"
+                    aria-label="Delete testimonial"
+                  >
+                    <Trash2 size={17} /> Delete
                   </button>
                   <button onClick={() => saveItem(i)} disabled={savingIdx === i} className="btn-primary text-sm">
                     <Save size={15} /> {savingIdx === i ? 'Saving…' : 'Save'}
